@@ -1,68 +1,210 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Zerodha Kite Basket Orders</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+      integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+      crossorigin="anonymous"
+    />
     <style>
-    @media (min-width: 992px) {
-        .base-grid .col-lg:nth-of-type(1) {flex-grow: 20;}
-        .base-grid .col-lg:nth-of-type(2) {flex-grow: 1;}
-        .base-grid .col-lg:nth-of-type(3) {flex-grow: 20;}
-    }
+      @media (min-width: 992px) {
+        .base-grid .col-lg:nth-of-type(1) {
+          flex-grow: 20;
+        }
+        .base-grid .col-lg:nth-of-type(2) {
+          flex-grow: 1;
+        }
+        .base-grid .col-lg:nth-of-type(3) {
+          flex-grow: 20;
+        }
+      }
+      #csv {
+        font-size: 80%;
+        word-break: break-word;
+        font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+          "Courier New", monospace;
+        border-radius: 0;
+      }
     </style>
-</head>
-<body>
-<div class="container-fluid">
-    <div class="row base-grid">
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row base-grid">
         <div class="col-12 col-lg">
-            <div class="row vh-100">
-                <textarea id="csv" class="form-control w-100 h-100" placeholder="exchange,tradingsymbol,quantity,transaction_type,product,order_type
+          <div class="row vh-100">
+            <textarea
+              id="csv"
+              class="form-control w-100 h-100"
+              placeholder="exchange,tradingsymbol,quantity,transaction_type,product,order_type
 NSE,JSWSTEEL,57,BUY,CNC,MARKET
-NSE,INFY,26,SELL,CNC,MARKET"></textarea>
-            </div>
-        </div>   
+NSE,INFY,26,SELL,CNC,MARKET"
+            ></textarea>
+          </div>
+        </div>
         <div class="col-12 col-lg d-flex align-items-center">
-            <button id="parse" class="btn btn-primary" style="text-align: center;">&#8594;</button>
-        </div> 
+          <button
+            id="parse"
+            class="btn btn-primary"
+            style="text-align: center;"
+          >
+            &#8594;
+          </button>
+        </div>
         <div class="col-12 col-lg">
-            <div class="row vh-100">
-                <iframe name="kite_frame" style="width:100%; height:100%; border:0"></iframe>
+          <div class="row vh-100">
+            <iframe
+              id="kite_frame"
+              name="kite_frame"
+              style="width:100%; height:100%; border:0; display: none"
+            ></iframe>
+            <div id="kite_docs">
+              <h3>Parameter reference</h3>
+              <table class="table table-sm small">
+                <tbody>
+                  <tr>
+                    <td style="min-width:150px; width:25%">
+                      <code>variety</code>
+                    </td>
+                    <td>
+                      Order variety (<code>regular</code>, <code>amo</code>,
+                      <code>bo</code>, <code>co</code>. Defaults to
+                      <code>regular</code>)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>tradingsymbol</code></td>
+                    <td>Tradingsymbol of the instrument</td>
+                  </tr>
+                  <tr>
+                    <td><code>exchange</code></td>
+                    <td>Name of the exchange</td>
+                  </tr>
+                  <tr>
+                    <td><code>transaction_type</code></td>
+                    <td>BUY or SELL</td>
+                  </tr>
+                  <tr>
+                    <td><code>order_type</code></td>
+                    <td>Order type (MARKET, LIMIT etc.)</td>
+                  </tr>
+                  <tr>
+                    <td><code>quantity</code></td>
+                    <td>Quantity to transact</td>
+                  </tr>
+                  <tr>
+                    <td><code>product</code></td>
+                    <td>
+                      Margin product. More on margin products
+                      <a
+                        target="_blank"
+                        href="https://kite.trade/docs/kite/orders/"
+                        >here</a
+                      >.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>price</code></td>
+                    <td>For LIMIT orders</td>
+                  </tr>
+                  <tr>
+                    <td><code>trigger_price</code></td>
+                    <td>For SL, SL-M etc.</td>
+                  </tr>
+                  <tr>
+                    <td><code>stoploss</code></td>
+                    <td>Stoploss price (for BO)</td>
+                  </tr>
+                  <tr>
+                    <td><code>squareoff</code></td>
+                    <td>Squareoff price / target price (for BO)</td>
+                  </tr>
+                  <tr>
+                    <td><code>trailing_stoploss</code></td>
+                    <td>Trailing stoploss price (for BO)</td>
+                  </tr>
+                  <tr>
+                    <td><code>disclosed_quantity</code></td>
+                    <td>Quantity to disclose publicly (for equity trades)</td>
+                  </tr>
+                  <tr>
+                    <td><code>validity</code></td>
+                    <td>Order validity</td>
+                  </tr>
+                  <tr>
+                    <td><code>readonly</code></td>
+                    <td>
+                      Default is <code>false</code>. If set to true, the UI does
+                      not allow the user to edit values such as quantity, price
+                      etc., and they can only review and execute.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><code>tag</code></td>
+                    <td>
+                      An optional tag to apply to an order to identify it
+                      (alphanumeric, max 8 chars)
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-        </div> 
-    </div>    
-</div> 
-<div id="kite_wrapper"></div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.2/papaparse.min.js"></script>
-<script src="https://kite.trade/publisher.js?v=3"></script>
-<script>
-var api_key = "i02zbmhf3t7zeh3t";
-var results = null;
-var kite = null;
-KiteConnect.ready(function() {
-    kite = new KiteConnect(api_key);
-    kite.setOption('redirect_url', '#');
-});
-parse.addEventListener('click', function(event) {
-    event.preventDefault();
-    results = Papa.parse(csv.value, {
-        header: true,
-        dynamicTyping: true
-    });
-    console.log('Raw parsed results: ', results);
-    KiteConnect.ready(function() {
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="kite_wrapper"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.2/papaparse.min.js"></script>
+    <script src="https://kite.trade/publisher.js?v=3"></script>
+    <script>
+      var api_key = "i02zbmhf3t7zeh3t";
+      var results = null;
+      var kite = null;
+      KiteConnect.ready(function() {
         kite = new KiteConnect(api_key);
-        kite.setOption('redirect_url', '#');
-        results.data.forEach(function(item) {
-            kite.add(item);
+        kite.setOption("redirect_url", "#");
+      });
+      parse.addEventListener("click", function(event) {
+        event.preventDefault();
+        if (csv.value.trim() === "") {
+          var error = "No valid orders found.";
+          console.error(error);
+          alert(error);
+          return;
+        }
+        results = Papa.parse(csv.value, {
+          header: true,
+          dynamicTyping: true
         });
-        console.log('kite.get(): ', kite.get());
-        var kite_html = kite.html().replace('<form', '<form target="kite_frame" id="kite_form"');
-        kite_wrapper.innerHTML = kite_html;
-        kite_form.submit();
-    });
-})
-</script>    
-</body>
+        console.log("Raw parsed results: ", results);
+        var filter = results.data.filter(function(item) {
+          return item.tradingsymbol && item.exchange && item.quantity;
+        });
+        if (filter.length < results.data.length) {
+          var error = "tradingsymbol, exchange and quantity are mandatory";
+          console.error(error);
+          alert(error);
+          return;
+        }
+        KiteConnect.ready(function() {
+          kite = new KiteConnect(api_key);
+          kite.setOption("redirect_url", "#");
+          results.data.forEach(function(item) {
+            kite.add(item);
+          });
+          console.log("kite.get(): ", kite.get());
+          var kite_html = kite
+            .html()
+            .replace("<form", '<form target="kite_frame" id="kite_form"');
+          document.getElementById("kite_wrapper").innerHTML = kite_html;
+          document.getElementById("kite_form").submit();
+          document.getElementById("kite_frame").style.display = "block";
+          document.getElementById("kite_docs").style.display = "none";
+        });
+      });
+    </script>
+  </body>
 </html>
