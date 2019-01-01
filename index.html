@@ -123,7 +123,7 @@ NSE,INFY,26,SELL,CNC,MARKET"
         }
         KiteConnect.ready(function() {
           kite = new KiteConnect(api_key);
-          kite.setOption("redirect_url", "#");
+          kite.setOption("redirect_url", window.location.href+"docs.html");
           results.data.forEach(function(item) {
             kite.add(item);
           });
