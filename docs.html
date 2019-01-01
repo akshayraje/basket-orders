@@ -19,8 +19,13 @@
             <small>
               <p>
                 While preparing your basket order data, make sure that you have
-                the <code>tradingsymbol</code>, <code>exchange</code> and
-                <code>quantity</code> columns in your data. These are mandaory.
+                the
+                <code>tradingsymbol</code>
+                ,
+                <code>exchange</code>
+                and
+                <code>quantity</code>
+                columns in your data. These are mandaory.
               </p>
               <p>
                 Apart from these, here's a reference of other columns that you
@@ -34,9 +39,17 @@
                       <code>variety</code>
                     </td>
                     <td>
-                      Order variety (<code>regular</code>, <code>amo</code>,
-                      <code>bo</code>, <code>co</code>. Defaults to
-                      <code>regular</code>)
+                      Order variety (
+                      <code>regular</code>
+                      ,
+                      <code>amo</code>
+                      ,
+                      <code>bo</code>
+                      ,
+                      <code>co</code>
+                      . Defaults to
+                      <code>regular</code>
+                      )
                     </td>
                   </tr>
                   <tr>
@@ -49,12 +62,20 @@
                   </tr>
                   <tr>
                     <td><code>transaction_type</code></td>
-                    <td><code>BUY</code> or <code>SELL</code></td>
+                    <td>
+                      <code>BUY</code>
+                      or
+                      <code>SELL</code>
+                    </td>
                   </tr>
                   <tr>
                     <td><code>order_type</code></td>
                     <td>
-                      Order type (<code>MARKET</code>, <code>LIMIT</code> etc.)
+                      Order type (
+                      <code>MARKET</code>
+                      ,
+                      <code>LIMIT</code>
+                      etc.)
                     </td>
                   </tr>
                   <tr>
@@ -68,31 +89,53 @@
                       <a
                         target="_blank"
                         href="https://kite.trade/docs/kite/orders/"
-                        >here</a
-                      >.
+                      >
+                        here
+                      </a>
+                      .
                     </td>
                   </tr>
                   <tr>
                     <td><code>price</code></td>
-                    <td>For <code>LIMIT</code> orders</td>
+                    <td>
+                      For
+                      <code>LIMIT</code>
+                      orders
+                    </td>
                   </tr>
                   <tr>
                     <td><code>trigger_price</code></td>
-                    <td>For <code>SL</code>, <code>SL-M</code> etc.</td>
+                    <td>
+                      For
+                      <code>SL</code>
+                      ,
+                      <code>SL-M</code>
+                      etc.
+                    </td>
                   </tr>
                   <tr>
                     <td><code>stoploss</code></td>
-                    <td>Stoploss price (for <code>BO</code>)</td>
+                    <td>
+                      Stoploss price (for
+                      <code>BO</code>
+                      )
+                    </td>
                   </tr>
                   <tr>
                     <td><code>squareoff</code></td>
                     <td>
-                      Squareoff price / target price (for <code>BO</code>)
+                      Squareoff price / target price (for
+                      <code>BO</code>
+                      )
                     </td>
                   </tr>
                   <tr>
                     <td><code>trailing_stoploss</code></td>
-                    <td>Trailing stoploss price (for <code>BO</code>)</td>
+                    <td>
+                      Trailing stoploss price (for
+                      <code>BO</code>
+                      )
+                    </td>
                   </tr>
                   <tr>
                     <td><code>disclosed_quantity</code></td>
@@ -105,9 +148,11 @@
                   <tr>
                     <td><code>readonly</code></td>
                     <td>
-                      Default is <code>false</code>. If set to true, the UI does
-                      not allow the user to edit values such as quantity, price
-                      etc., and they can only review and execute.
+                      Default is
+                      <code>false</code>
+                      . If set to true, the UI does not allow the user to edit
+                      values such as quantity, price etc., and they can only
+                      review and execute.
                     </td>
                   </tr>
                   <tr>
@@ -124,5 +169,12 @@
         </div>
       </div>
     </main>
+    <script>
+      var url = new URL(window.location.href);
+      var status = url.searchParams.get("status");
+      if (status) {
+        alert("Order status: " + status);
+      }
+    </script>
   </body>
 </html>
