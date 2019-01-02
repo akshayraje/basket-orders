@@ -172,7 +172,7 @@
     <script>
       var url = new URL(window.location.href);
       var status = url.searchParams.get("status");
-      if (status) {
+      if (status && status !== "null") {
         alert("Order status: " + status);
       }
     </script>
