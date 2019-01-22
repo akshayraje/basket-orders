@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Zerodha Kite Swap Order</title>
+  </head>
+  <body>
+    <form
+      method="post"
+      id="basket-form"
+      action="https://kite.trade/connect/basket"
+    >
+      <input type="hidden" name="api_key" value="i02zbmhf3t7zeh3t" />
+      <input type="hidden" id="basket" name="data" value="" />
+    </form>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        var defaults = {
+            exchange: "NSE",
+            product: "CNC",
+            costPc: 0.0022
+          },
+          mandate = [
+            "exchange",
+            "product",
+            "symbolFrom",
+            "symbolTo",
+            "quantity",
+            "costPc"
+          ],
+          apikey = "R6XRIA9VBMIUVCC9",
+          params = {},
+          missing = [],
+          symbolFromPrice = 0,
+          symbolToPrice = 0,
+          symbolToQuantity = 0,
+          orders = [];
+
+        var url = new URL(window.location.href);
+        url.searchParams.forEach(function(value, key) {
+          params[key] = value;
+        });
+
+        var options = $.extend(defaults, params);
+
+        mandate.forEach(function(value, key) {
+          if (Object.keys(options).indexOf(value) === -1) {
+            missing.push(value);
+          }
+        });
+
+        if (missing.length > 0) {
+          var error = "Missing params: " + missing.join(", ");
+          console.error(error);
+          alert(error);
+          return;
+        }
+
+        options.quantity = parseFloat(options.quantity);
+        options.costPc = parseFloat(options.costPc);
+
+        $.when(
+          $.ajax({
+            url:
+              "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" +
+              options.exchange +
+              ":" +
+              options.symbolFrom +
+              "&apikey=" +
+              apikey,
+            success: function(response) {
+              symbolFromPrice = parseFloat(
+                response["Global Quote"]["05. price"]
+              );
+            }
+          }),
+
+          $.ajax({
+            url:
+              "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" +
+              options.exchange +
+              ":" +
+              options.symbolTo +
+              "&apikey=" +
+              apikey,
+            success: function(response) {
+              symbolToPrice = parseFloat(response["Global Quote"]["05. price"]);
+            }
+          })
+        ).then(function() {
+          symbolToQuantity = Math.floor(
+            (symbolFromPrice * options.quantity * (1 - options.costPc)) /
+              symbolToPrice
+          );
+
+          if (symbolToQuantity === 0) {
+            var error = "0 buy quantity calculated for " + options.symbolTo;
+            console.error(error);
+            alert(error);
+            return;
+          }
+
+          orders.push({
+            tradingsymbol: options.symbolFrom,
+            exchange: options.exchange,
+            transaction_type: "SELL",
+            order_type: "MARKET",
+            quantity: options.quantity
+          });
+          orders.push({
+            tradingsymbol: options.symbolTo,
+            exchange: options.exchange,
+            transaction_type: "BUY",
+            order_type: "MARKET",
+            quantity: symbolToQuantity
+          });
+
+          console.log("Submitting orders: ", orders);
+
+          $("#basket").val(JSON.stringify(orders));
+          $("#basket-form").submit();
+        });
+      });
+    </script>
+  </body>
+</html>

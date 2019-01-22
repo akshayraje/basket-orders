@@ -21,5 +21,24 @@ If you have an operational account, head to [basketorders.tk](https://basketorde
 
 While preparing your basket order data, make sure that you have the `tradingsymbol`, `exchange` and `quantity` columns in your data. These are mandaory. Apart from these, a detailed reference of other columns that you can use in your basket orders is available on the right side of screen at [basketorders.tk](https://basketorders.tk/).
 
+# [Zerodha Kite Swap Order](https://basketorders.tk/swap.html)
+
+## What are Swap Orders?
+Switch (Contingent or Swap) Order is an order to sell one security and then to buy another typically using the proceeds of the sell order to fund the buy order.
+
+## How secured is Swap Order?
+Swap Order is simply a special form or Basket order. You can read about Basket order security above.
+
+## How to use Swap Order?
+
+Simply pass the following `GET` parameters to the URL [basketorders.tk/swap.html](https://basketorders.tk/swap.html)
+
+- `symbolFrom` Scrip symbol to sell
+- `quantity` Quantity to sell
+- `symbolTo` Scrip symbol to buy
+- `exchange` (optional) BSE or NSE
+- `product` (optional) CNC or MIS
+- `costPc` (optional) Cost percent to offset brokerage costs. Defauts to 0.0022 (0.22%)
+
 ## Questions, comments, feedback?
 Reach out to me at [@akshayraje](https://twitter.com/akshayraje)
