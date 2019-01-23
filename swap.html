@@ -68,12 +68,7 @@
               ":" +
               options.symbolFrom +
               "&apikey=" +
-              apikey,
-            success: function(response) {
-              symbolFromPrice = parseFloat(
-                response["Global Quote"]["05. price"]
-              );
-            }
+              apikey
           }),
 
           $.ajax({
@@ -83,12 +78,13 @@
               ":" +
               options.symbolTo +
               "&apikey=" +
-              apikey,
-            success: function(response) {
-              symbolToPrice = parseFloat(response["Global Quote"]["05. price"]);
-            }
+              apikey
           })
-        ).then(function() {
+        ).done(function(responseFrom, responseTo) {
+
+          symbolFromPrice = parseFloat(responseFrom[0]["Global Quote"]["05. price"]);
+          symbolToPrice = parseFloat(responseTo[0]["Global Quote"]["05. price"]);
+
           symbolToQuantity = Math.floor(
             (symbolFromPrice * options.quantity * (1 - options.costPc)) /
               symbolToPrice
