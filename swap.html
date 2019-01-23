@@ -81,9 +81,12 @@
               apikey
           })
         ).done(function(responseFrom, responseTo) {
-
-          symbolFromPrice = parseFloat(responseFrom[0]["Global Quote"]["05. price"]);
-          symbolToPrice = parseFloat(responseTo[0]["Global Quote"]["05. price"]);
+          symbolFromPrice = parseFloat(
+            responseFrom[0]["Global Quote"]["05. price"]
+          );
+          symbolToPrice = parseFloat(
+            responseTo[0]["Global Quote"]["05. price"]
+          );
 
           symbolToQuantity = Math.floor(
             (symbolFromPrice * options.quantity * (1 - options.costPc)) /
@@ -91,7 +94,8 @@
           );
 
           if (symbolToQuantity === 0 || isNaN(symbolToQuantity)) {
-            var error = "Invalid buy quantity calculated for " + options.symbolTo;
+            var error =
+              "Invalid buy quantity calculated for " + options.symbolTo;
             console.error(error);
             alert(error);
             return;
