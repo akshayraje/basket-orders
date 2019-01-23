@@ -40,5 +40,9 @@ Simply pass the following `GET` parameters to the URL [basketorders.tk/swap.html
 - `product` (optional) CNC or MIS
 - `costPc` (optional) Cost percent to offset brokerage costs. Defauts to 0.0022 (0.22%)
 
+Here's a sample URL build to exit a position of 50 shares of `INFY` and enter into `LIQUIDBEES` using the proceeds, offsetting a cost percent being 0.15%:
+
+https://basketorders.tk/swap.html?symbolFrom=INFY&symbolTo=LIQUIDBEES&quantity=50&costPc=0.0015
+
 ## Questions, comments, feedback?
 Reach out to me at [@akshayraje](https://twitter.com/akshayraje)
