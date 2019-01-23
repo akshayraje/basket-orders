@@ -94,8 +94,8 @@
               symbolToPrice
           );
 
-          if (symbolToQuantity === 0) {
-            var error = "0 buy quantity calculated for " + options.symbolTo;
+          if (symbolToQuantity === 0 || isNaN(symbolToQuantity)) {
+            var error = "Invalid buy quantity calculated for " + options.symbolTo;
             console.error(error);
             alert(error);
             return;
@@ -116,7 +116,8 @@
             quantity: symbolToQuantity
           });
 
-          console.log("Submitting orders: ", orders);
+          console.log("Submitting orders... ");
+          console.table(orders);
 
           $("#basket").val(JSON.stringify(orders));
           $("#basket-form").submit();
