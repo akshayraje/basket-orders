@@ -12,6 +12,11 @@
     >
       <input type="hidden" name="api_key" value="i02zbmhf3t7zeh3t" />
       <input type="hidden" id="basket" name="data" value="" />
+      <input
+        name="redirect_url"
+        type="hidden"
+        value="https://basketorders.tk/"
+      />
     </form>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script>
@@ -46,7 +51,10 @@
 
         mandate.forEach(function(value, key) {
           if (Object.keys(options).indexOf(value) === -1) {
-            missing.push(value);
+            var promptMissing = prompt(value + ":");
+            !promptMissing
+              ? missing.push(value)
+              : (options[value] = promptMissing);
           }
         });
 
