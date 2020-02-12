@@ -4,9 +4,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Test page</title>
+    <script>
+      function openWin(){
+        var a = window.open('about:blank', '_blank');
+        a.location = 'https://google.com';
+      }
+    </script>  
   </head>
   <body>
   <a href="https://google.com" target="_blank">Go to Google.com in new tab</a>
-  <p onclick='javascript:window.open("https://google.com", "_blank","resizable=yes,scrollbars=yes,toolbar=yes,menubar=yes,location=no")'>Go to Google.com using window.open in new tab</p>
+  <p onclick='javascript:openWin()'>Go to Google.com using window.open in new tab</p>
   </body>
 </html>  
